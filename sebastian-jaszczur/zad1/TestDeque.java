@@ -37,6 +37,33 @@ public class TestDeque {
 		System.out.println();
 		printDeque(d);
 		System.out.println("Empty: "+d.isEmpty());
+		
+		System.out.println("Cycle testing:");
+		d.pushRight(2);
+		d.pushRight(3);
+		d.pushRight(4);
+		d.pushRight(4);
+		d.pushRight(1);
+		printDeque(d);
+		System.out.println("Cycle: "+d.hasCycle());
+		
+		while(!d.isEmpty())d.popLeft();
+		d.pushRight(2);
+		d.pushRight(3);
+		d.pushRight(4);
+		d.pushRight(0);
+		d.pushRight(1);
+		printDeque(d);
+		System.out.println("Cycle: "+d.hasCycle());
+		
+		while(!d.isEmpty())d.popLeft();
+		d.pushRight(2);
+		d.pushRight(3);
+		d.pushRight(-1);
+		d.pushRight(0);
+		d.pushRight(1);
+		printDeque(d);
+		System.out.println("Cycle: "+d.hasCycle());
 	}
 
 }

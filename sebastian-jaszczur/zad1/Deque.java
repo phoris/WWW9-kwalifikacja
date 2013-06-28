@@ -90,7 +90,23 @@ public class Deque {
 		return userSize==0;
 	}
 	
-	/*int hasCycle() {
-		// later
-	}*/
+	int hasCycle() {
+		int one = 0;
+		int two = 0;
+		do {
+			two = at(two);
+			two = at(two);
+			one = at(one);
+		}while(one != two && two != -1);
+		
+		if(two == -1)
+			return -1;
+		
+		int siz = 0;
+		do {
+			siz += 1;
+			one = at(one);
+		}while(one != two);
+		return siz;
+	}
 }
