@@ -1,51 +1,96 @@
 
 public class Deque {
 	private int realSize = 1;
-	private int rightSize = 0;
-	private int leftSize = 0;
+	private int start = 0;
+	private int userSize = 0;
 	private int[] arr = new int[1];
 	
+	private int scaleIndex(int pos) {
+		int val = start+pos;
+		while(val<0)
+			val += realSize;
+		while(val>=realSize)
+			val -= realSize; // ew. mozna zrobic modulo, ale w srednim przypadku -> to powinno byc lepsze
+		return val;
+	}
+	
+	private void changeArray(int newSize) {
+		int[] newArr = new int[newSize];
+		
+		for(int i=0; i<userSize; i++) {
+			newArr[i] = arr[scaleIndex(i)];
+		}
+		
+		realSize = newSize;
+		arr = newArr;
+		start = 0;
+	}
+	
 	private void expandArray() {
-		//not finished
+		changeArray(realSize*2);
 	}
 	
 	private void shortenArray() {
-		//not finished
+		changeArray(realSize/2);
+	}
+	
+	private void checkSize(int number) {
+		if(userSize+number > realSize)
+			expandArray();
+		if((userSize+number)*4 <= realSize)
+			shortenArray();
 	}
 	
 	void pushLeft(int el) {
-		//not finished
-		if(rightSize + leftSize < realSize) {
-			
-		}
+		checkSize(+1);
+		start -= 1;
+		userSize += 1;
+		arr[scaleIndex(0)] = el;
 	}
 	
 	void pushRight(int el) {
-		//not finished
+		checkSize(+1);
+		userSize += 1;
+		arr[scaleIndex(userSize-1)] = el;
 	}
 	
 	int popLeft() {
-		//not finished
-		return -1;
+		if(userSize <= 0) {
+			return -1;
+		}
+		int val = arr[scaleIndex(0)];
+		start += 1;
+		userSize -= 1;
+		checkSize(0);
+		return val;
 	}
 	
 	int popRight() {
-		//not finished
-		return -1;
+		if(userSize <= 0) {
+			return -1;
+		}
+		int val = arr[scaleIndex(userSize-1)];
+		userSize -= 1;
+		checkSize(0);
+		return val;
 	}
 	
 	int at(int pos) {
-		//not finished
-		return -1;
+		if(pos < 0 || pos >= userSize) {
+			return -1;
+		}
+		return arr[scaleIndex(pos)];
 	}
 	
 	int size() {
-		// FINISHED
-		return rightSize+leftSize;
+		return userSize;
 	}
 	
 	boolean isEmpty() {
-		// FINISHED
-		return (rightSize + leftSize > 0);
+		return userSize==0;
 	}
+	
+	/*int hasCycle() {
+		// later
+	}*/
 }
