@@ -4,14 +4,14 @@ public class Animacja {
 	
 	public static void main(String[] args) {
 		Field[] bots = {new Bot('A'), new Bot('B')};
-		Surface surface = new Surface(8, 8, bots);
+		Surface surface = new Surface(12, 8, bots);
 		
 		while(surface.alive()) {
 			surface.run();
 			System.out.println(surface);
 			
 			try { 
-				Thread.sleep(100); 
+				Thread.sleep(500);
 			}catch ( InterruptedException e) { 
 				System.out.println("This error should not happen");
 			} 
