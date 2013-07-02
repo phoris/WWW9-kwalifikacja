@@ -4,7 +4,7 @@ public class Animacja {
 	
 	public static void main(String[] args) {
 		Field[] bots = {new Bot('A'), new Bot('B')};
-		Surface surface = new Surface(8, 8, new Field(), bots);
+		Surface surface = new Surface(8, 8, bots);
 		
 		while(surface.alive()) {
 			surface.run();
