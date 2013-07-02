@@ -47,7 +47,7 @@ public class Surface {
 		turn += 1;
 		for(Field[] row: area) {
 			for(Field x: row) {
-				x.interact(turn, area);
+				x.interact(this, turn, area);
 			}
 		}
 	}

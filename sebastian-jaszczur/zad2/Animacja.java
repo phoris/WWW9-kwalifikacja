@@ -3,7 +3,7 @@ public class Animacja {
 
 	
 	public static void main(String[] args) {
-		Field[] bots = {new Bot('A'), new Bot('B')};
+		Field[] bots = {new Bot('A', new RandomAI()), new Bot('B', new RandomAI())};
 		Surface surface = new Surface(12, 8, bots);
 		
 		while(surface.alive()) {

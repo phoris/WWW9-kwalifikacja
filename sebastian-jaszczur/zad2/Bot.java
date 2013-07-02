@@ -5,11 +5,12 @@ public class Bot extends Field {
 	private int hp = 5;
 	private Direction dir;
 	private int x, y;
-	//private BotAI control;
+	private BotAI control;
 	private static int actions = 5;
 	
-	public Bot(char c) {
+	public Bot(char c, BotAI aI) {
 		name = c;
+		control = aI;
 	}
 	
 	public int alive() {
@@ -29,12 +30,47 @@ public class Bot extends Field {
 		dir = d;
 	}
 	
+	private Field areaAt(Field[][] area, int x, int y) {
+		if(x>=area.length)x -= area.length;
+		if(x<0)x += area.length;
+		if(y>=area[0].length)y -= area[0].length;
+		if(y<0)y += area[0].length;
+		return area[x][y];
+	}
+	
 	private int lastTurn = 0;
-	public void interact(int turn, Field[][] area) {
+	private Decision[] decs;
+	private int orderNumber;
+	public void interact(Surface surf, int turn, Field[][] area) {
 		if(turn == lastTurn)
 			return;
 		lastTurn = turn;
-		stepForward(area);
+		decs = control.decide(x, y, area, actions);
+		orderNumber = 0;
+	}
+	
+	public void doOrders(Surface surf, int turn, Field[][] area) {
+		if(orderNumber >= decs.length || orderNumber >= actions)
+			return;
+		switch(decs[orderNumber]) {
+		case SHOT:
+			shot(area);
+			break;
+		case CHOP:
+			chop(area);
+			break;
+		case STEP:
+			stepForward(area);
+			break;
+		case BACKSTEP:
+			stepBack(area);
+			break;
+		case LEFT:
+			turnLeft(area);
+		case RIGHT:
+			turnRight(area);
+		}
+		orderNumber += 1;
 	}
 	
 	private void shot(Field[][] area) {
@@ -61,39 +97,37 @@ public class Bot extends Field {
 	private void chop(Field[][] area) {
 		switch(dir) {
 		case UP:
-			area[x-1][y].getHit();
-			area[x+1][y].getHit();
-			area[x][y+1].getHit();
+			areaAt(area, x-1, y).getHit();
+			areaAt(area, x+1, y).getHit();
+			areaAt(area, x, y+1).getHit();
 			break;
 		case RIGHT:
-			area[x][y+1].getHit();
-			area[x][y-1].getHit();
-			area[x+1][y].getHit();
+			areaAt(area, x, y+1).getHit();
+			areaAt(area, x, y-1).getHit();
+			areaAt(area, x+1, y).getHit();
 			break;
 		case LEFT:
-			area[x][y+1].getHit();
-			area[x][y-1].getHit();
-			area[x-1][y].getHit();
+			areaAt(area, x, y+1).getHit();
+			areaAt(area, x, y-1).getHit();
+			areaAt(area, x-1, y).getHit();
 			break;
 		case DOWN:
-			area[x-1][y].getHit();
-			area[x+1][y].getHit();
-			area[x][y-1].getHit();
+			areaAt(area, x-1, y).getHit();
+			areaAt(area, x+1, y).getHit();
+			areaAt(area, x, y-1).getHit();
 			break;
 		}
 	}
 	
 	private void changePosition(Field[][] area, int newX, int newY) {
-		if(newX>=area.length)newX -= area.length;
-		if(newX<0)newX += area.length;
-		if(newY>=area[0].length)newY -= area[0].length;
-		if(newY<0)newY += area[0].length;
+		newX = (newX+area.length)%area.length;
+		newY = (newY+area[0].length)%area[0].length;
 		
 		if(area[newX][newY].getClass()==Field.class) {
-			Field swapper = this;
+			Field swapper = area[x][y];
 			area[x][y] = area[newX][newY];
 			area[newX][newY] = swapper;
-			setPosition(newX, newY);
+			setPosition(newX, newY); //I don't have will to do that better
 		}else
 			System.out.println("WTF");
 	}

@@ -8,7 +8,11 @@ public class Field {
 		return 0;
 	}
 	
-	public void interact(int turn, Field[][] area) {
+	public void interact(Surface surf, int turn, Field[][] area) {
+		// nothing
+	}
+	
+	public void doOrders(Surface surf, int turn, Field[][] area) {
 		// nothing
 	}
 	
