@@ -11,12 +11,13 @@ public class Animacja {
 			System.out.println(surface);
 			
 			try { 
-				Thread.sleep(500);
+				Thread.sleep(150);
 			}catch ( InterruptedException e) { 
 				System.out.println("This error should not happen");
 			} 
 		}
-		
+		Field winner = (bots[0].alive()>0?bots[0]:bots[1]);
+		System.out.println("Wygral "+winner+" z hp="+winner.alive());
 		System.out.println("Koniec");
 	}
 

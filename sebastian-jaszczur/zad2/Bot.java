@@ -41,15 +41,20 @@ public class Bot extends Field {
 	private int lastTurn = 0;
 	private Decision[] decs;
 	private int orderNumber;
-	public void interact(Surface surf, int turn, Field[][] area) {
+	public int interact(Surface surf, int turn, Field[][] area) {
 		if(turn == lastTurn)
-			return;
+			return 0;
 		lastTurn = turn;
 		decs = control.decide(x, y, area, actions);
 		orderNumber = 0;
+		return Math.min(decs.length, actions);
 	}
 	
+	private int lastActionTurn = 0;
 	public void doOrders(Surface surf, int turn, Field[][] area) {
+		if(lastActionTurn == turn)
+			return;
+		lastActionTurn = turn;
 		if(orderNumber >= decs.length || orderNumber >= actions)
 			return;
 		switch(decs[orderNumber]) {

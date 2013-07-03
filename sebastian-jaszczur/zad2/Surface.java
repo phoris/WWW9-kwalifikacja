@@ -43,13 +43,23 @@ public class Surface {
 		return(numberOfAliveObjects()>1);
 	}
 
+	private int turnsPerTurn = 0;
 	public void run() {
 		turn += 1;
-		for(Field[] row: area) {
-			for(Field x: row) {
-				x.interact(this, turn, area);
+		if(turnsPerTurn == 0)
+		{
+			for(Field[] row: area) {
+				for(Field x: row) {
+					turnsPerTurn = Math.max(turnsPerTurn, x.interact(this, turn, area));
+				}
 			}
 		}
+		for(Field[] row: area) {
+			for(Field x: row) {
+				x.doOrders(this, turn, area);
+			}
+		}
+		turnsPerTurn -= 1;
 	}
 	
 	public String toString() {
