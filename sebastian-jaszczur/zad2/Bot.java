@@ -133,8 +133,7 @@ public class Bot extends Field {
 			area[x][y] = area[newX][newY];
 			area[newX][newY] = swapper;
 			setPosition(newX, newY); //I don't have will to do that better
-		}else
-			System.out.println("WTF");
+		}
 	}
 	
 	private void stepForward(Field[][] area) {
