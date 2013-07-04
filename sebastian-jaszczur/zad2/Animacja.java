@@ -1,6 +1,6 @@
 
 public class Animacja {
-	static int turnTime = 250;
+	static int turnTime = 250; //to jest czas
 	
 	public static void main(String[] args) {
 		Field[] bots = {new Bot('A', new ShotAI()), new Bot('B', new RandomAI())};
