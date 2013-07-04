@@ -6,7 +6,10 @@ public class Bot extends Field {
 	private Direction dir;
 	private int x, y;
 	private BotAI control;
-	private static int actions = 5;
+	
+	private int getActions() {
+		return hp;
+	}
 	
 	public Bot(char c, BotAI aI) {
 		name = c;
@@ -45,9 +48,9 @@ public class Bot extends Field {
 		if(turn == lastTurn)
 			return 0;
 		lastTurn = turn;
-		decs = control.decide(x, y, area, actions);
+		decs = control.decide(x, y, area, getActions());
 		orderNumber = 0;
-		return Math.min(decs.length, actions);
+		return Math.min(decs.length, getActions());
 	}
 	
 	private int lastActionTurn = 0;
@@ -55,7 +58,7 @@ public class Bot extends Field {
 		if(lastActionTurn == turn)
 			return;
 		lastActionTurn = turn;
-		if(orderNumber >= decs.length || orderNumber >= actions)
+		if(orderNumber >= decs.length || orderNumber >= getActions())
 			return;
 		switch(decs[orderNumber]) {
 		case SHOT:
