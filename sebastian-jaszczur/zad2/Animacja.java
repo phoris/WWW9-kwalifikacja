@@ -1,6 +1,6 @@
 
 public class Animacja {
-
+	static turnTime = 100;
 	
 	public static void main(String[] args) {
 		Field[] bots = {new Bot('A', new ShotAI()), new Bot('B', new RandomAI())};
@@ -11,7 +11,7 @@ public class Animacja {
 			System.out.println(surface);
 			
 			try { 
-				Thread.sleep(0);
+				Thread.sleep(turnTime);
 			}catch ( InterruptedException e) { 
 				System.out.println("This error should not happen");
 			} 
