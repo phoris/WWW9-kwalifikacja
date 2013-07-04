@@ -11,7 +11,7 @@ public class Animacja {
 			System.out.println(surface);
 			
 			try { 
-				Thread.sleep(150);
+				Thread.sleep(250);
 			}catch ( InterruptedException e) { 
 				System.out.println("This error should not happen");
 			} 

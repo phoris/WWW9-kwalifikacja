@@ -27,12 +27,15 @@ public class Surface {
 		}
 	}
 	
-	private int numberOfAliveObjects() {
+	private int numberOfAliveObjects(boolean wypisuj) {
 		int objectsAlive = 0;
 		for(Field[] row: area) {
 			for(Field x: row) {
 				if(x.alive()>0) {
 					objectsAlive += 1;
+					if(wypisuj) {
+						System.out.println(x+" hp is "+x.alive());
+					}
 				}
 			}
 		}
@@ -40,7 +43,7 @@ public class Surface {
 	}
 
 	public boolean alive() {
-		return(numberOfAliveObjects()>1);
+		return(numberOfAliveObjects(false)>1);
 	}
 
 	private int turnsPerTurn = 0;
@@ -64,7 +67,8 @@ public class Surface {
 	
 	public String toString() {
 		String str = "Turn number: "+turn+"\n"+
-						"Bots alive: "+numberOfAliveObjects()+"\n";
+						"Bots alive: "+numberOfAliveObjects(true)+"\n";
+		
 		for(int i=yS-1; i>=0; i--) {
 			for(int j=0; j<xS; j++) {
 				str += area[j][i];
