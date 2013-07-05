@@ -27,13 +27,13 @@ public class Surface {
 		}
 	}
 	
-	private int numberOfAliveObjects(boolean wypisuj) {
+	private int numberOfAliveObjects(boolean printAliveObjects) {
 		int objectsAlive = 0;
 		for(Field[] row: area) {
 			for(Field x: row) {
 				if(x.alive()>0) {
 					objectsAlive += 1;
-					if(wypisuj) {
+					if(printAliveObjects) {
 						System.out.println(x+" hp is "+x.alive());
 					}
 				}
